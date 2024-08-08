@@ -7,6 +7,7 @@ use App\Models\TipoZonaModel;
 use CodeIgniter\Controller;
 use App\Models\HistorialAlarmaModel;
 use CodeIgniter\RESTful\ResourceController;
+use App\Models\PermisosAlarmaModel;
 
 
 class AlarmaController extends ResourceController
@@ -106,5 +107,30 @@ class AlarmaController extends ResourceController
         } else {
             return $this->fail($model->errors());
         }
+    }
+
+    public function getAlarmasByUsuario($usuarioId)
+    {
+        $model = new PermisosAlarmaModel();
+        $alarmas = $model->getAlarmasByUsuario($usuarioId);
+        
+        return $this->respond($alarmas);
+    }
+
+    public function activateAlarma()
+    {
+        $model = new HistorialAlarmaModel();
+        $data = $this->request->getJSON();
+
+        $insertData = [
+            'ALARMA_ID' => $data->alarma_id,
+            'USUARIO_ID' => $data->usuario_id,
+            'HISTORIAL_ALARMA_LOCALIZACION' => $data->localizacion,
+            'MOTIVO_ALARMA_ID' => $data->motivo_alarma_id,
+        ];
+
+        $model->insert($insertData);
+
+        return $this->respondCreated(['status' => 'Alarma activada y registrada en el historial']);
     }
 }

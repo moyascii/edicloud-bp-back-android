@@ -38,4 +38,14 @@ class PermisosAlarmaModel extends Model
 
         return $this->insert($data);
     }
+
+    public function getAlarmasByUsuario($usuarioId)
+    {
+        return $this->db->table($this->table)
+            ->select('alarma.*')
+            ->join('alarma', 'permisos_alarma.ALARMA_ID = alarma.ALARMA_ID')
+            ->where('permisos_alarma.USUARIO_ID', $usuarioId)
+            ->get()
+            ->getResultArray();
+    }
 }

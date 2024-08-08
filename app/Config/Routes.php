@@ -196,3 +196,9 @@ $routes->delete('usuario/delete/(:num)', 'UsuarioController::delete/$1');
 // Alarma hostorial
 
 $routes->post('alarma/historial', 'AlarmController::createHistorial');
+$routes->get('alarmas/usuario/(:num)', 'AlarmaController::getAlarmasByUsuario/$1');
+$routes->post('alarmas/activate', 'AlarmaController::activateAlarma');
+
+// Historial
+$routes->get('historial', 'HistorialAlarmaController::getAllHistorial');
+

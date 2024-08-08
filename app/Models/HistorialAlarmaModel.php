@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use CodeIgniter\Model;
@@ -16,4 +15,9 @@ class HistorialAlarmaModel extends Model
         'HISTORIAL_ALARMA_LOCALIZACION', 
         'MOTIVO_ALARMA_ID'
     ];
+
+    public function getAllHistorial()
+    {
+        return $this->orderBy('HISTORIAL_ALARMA_CREATE_AT', 'DESC')->first();
+    }
 }
